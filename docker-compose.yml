@@ -13,7 +13,7 @@
     #restart: unless-stopped
 
   kuma-bridge:
-    image: christracy/uptime-kuma-api-v2
+    image: christracy/uptime-kuma-api
     container_name: kuma-bridge
     restart: unless-stopped
     ports:
