@@ -339,7 +339,9 @@ class KumaClient:
         self._cache.pop("monitorList", None)
     self._prime_waiter("monitorList")
     self._do_login()
-    return self._wait("monitorList")
+    result = self._wait("monitorList")
+    print(f"[bridge] get_monitors: got {len(result) if result else 0} monitors, keys: {list(result.keys())[:3] if result else []}", flush=True)
+    return result
 
     def find_monitor_by_url(self, url: str) -> dict | None:
         """Return the first monitor whose url matches (case-insensitive).
