@@ -335,10 +335,11 @@ class KumaClient:
     return monitors
 
     def get_monitors(self) -> dict:
-        raw = self._cache.get("monitorList")
-        if not raw:
-            raw = self._fetch_monitors()
-        return raw
+    with self._lock:
+        self._cache.pop("monitorList", None)
+    self._prime_waiter("monitorList")
+    self._do_login()
+    return self._wait("monitorList")
 
     def find_monitor_by_url(self, url: str) -> dict | None:
         """Return the first monitor whose url matches (case-insensitive).
